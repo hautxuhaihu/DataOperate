@@ -8,19 +8,20 @@ import java.util.List;
 import java.util.Map;
 
 public class WriteFilesImp implements WriteFiles {
-    public void writeResultOne(List<String> list){
-        String path = ".\\results\\Result1.txt";
-        for(String item : list){
-            IOUtil.writeLog(path,item);
-        }
-    }
-    public void writeHandledData(List<String> list){
-        String path = ".\\results\\Result2.txt";
-        for(String item : list){
-            String[] splitStr = item.split(",");
-            double salary = new BigDecimal(splitStr[splitStr.length-1]).setScale(2, RoundingMode. HALF_UP ).doubleValue();
-            item = splitStr[0]+",平均薪资（元/月）:"+salary;
-            IOUtil.writeLog(path,item);
+    public void writeHandledData(List<String> list,boolean isHasSalary){
+        if(isHasSalary){
+            String path = ".\\results\\Result2.txt";
+            for(String item : list){
+                String[] splitStr = item.split(",");
+                double salary = new BigDecimal(splitStr[splitStr.length-1]).setScale(2, RoundingMode. HALF_UP ).doubleValue();
+                item = splitStr[0]+",平均薪资（元/月）:"+salary;
+                IOUtil.writeLog(path,item);
+            }
+        }else{
+            String path = ".\\results\\Result1.txt";
+            for(String item : list){
+                IOUtil.writeLog(path,item);
+            }
         }
     }
     public void writeConutryAvg(double salary){
