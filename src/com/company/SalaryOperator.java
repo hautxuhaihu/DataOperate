@@ -5,34 +5,46 @@ import java.util.*;
 
 public class SalaryOperator {
     //因为相同职位不同企业工资可能不同，所以定义{"公司名"：{"岗位":[企业1薪资，企业2薪资...]}}
-    public static HashMap<String,HashMap<String,ArrayList<String>>> queryPostAvg(List<String> InfoList){
+    public static HashMap<String,HashMap<String,ArrayList<String>>> changeDataType(List<String> InfoList){
         /**
-         * 本函数功能是获取全国各个岗位的平均薪资
+         * 本函数主要是将list[string1,string2....]转化为高级的数据类型，用来解决复杂问题（4-6）
          */
         HashMap<String,HashMap<String, ArrayList<String>>> allSalaryMap = new HashMap<>();
         for(int i=0;i<InfoList.size();i++){
             String infoString = InfoList.get(i);
             String[] splitInfo = infoString.split(",");
-            int endIndex = splitInfo.length-1;
+            int endIndex = splitInfo.length-1;//定位list的末尾元素
             //检查map里面是否已经有此城市信息
-            if(allSalaryMap.containsKey(splitInfo[endIndex-2])){
+            String city = splitInfo[endIndex-2];//这是城市名，是外围map的key
+            String job = splitInfo[0];//这是工作名，是里面的map的key
+            if(allSalaryMap.containsKey(city)){
                 //检查map里面有没有岗位的信息,if存在，将薪资加进去，如果没有创建新的岗位
-                if (allSalaryMap.get(splitInfo[endIndex-2]).containsKey(splitInfo[0])){
-                    allSalaryMap.get(splitInfo[endIndex-2]).get(splitInfo[0]).add(splitInfo[endIndex]);//把工资加到list中，key：岗位名称
+                if (allSalaryMap.get(city).containsKey(job)){
+                    allSalaryMap.get(city).get(job).add(splitInfo[endIndex]);//把工资加到list中，key：岗位名称
                 }else {
                     ArrayList<String> salaryList = new ArrayList<>();
                     salaryList.add(splitInfo[endIndex]);
-                    allSalaryMap.get(splitInfo[endIndex-2]).put(splitInfo[0],salaryList);
+                    allSalaryMap.get(city).put(job,salaryList);
                 }
             }else {
                 //如果map里面没有这个城市，将城市加进去，还有对应这条信息的岗位名称和薪资。
                 ArrayList<String> salaryList = new ArrayList<>();
-                salaryList.add(splitInfo[endIndex]);
+                salaryList.add(splitInfo[endIndex]);//将薪资加到list中
                 HashMap<String,ArrayList<String>> hashMap = new HashMap<>();
-                hashMap.put(splitInfo[0],salaryList);
-                allSalaryMap.put(splitInfo[endIndex-2],hashMap);
+                hashMap.put(job,salaryList);//组成一个新的map<String,ArrayList[]>
+                allSalaryMap.put(city,hashMap);//将上一个map加到外围的map中,得到map{String，map{String,ArrayList[]}}
             }
         }
+        return allSalaryMap;
+    }
+
+    public static  HashMap<String,HashMap<String,ArrayList<String>>> queryPostAvg
+            (HashMap<String,HashMap<String,ArrayList<String>>> allSalaryMap){
+        /**
+         * @param allSalaryMap:这是一个贯穿整个项目的高级数据类型；
+         * @return: allSalaryMap,我们将平均成绩仍然放在这个数据结构中，并返回，让整个系统以这个数据机构为一个数据链，
+         * 后续操作都只是对这个数据链进行操作。
+         */
         for (Map.Entry<String,HashMap<String,ArrayList<String>>> entryCity : allSalaryMap.entrySet()){
             //遍历字典
             HashMap<String,ArrayList<String>> JobMap  = entryCity.getValue();
@@ -94,6 +106,9 @@ public class SalaryOperator {
     }
 
     public static List<String> countAvgSalary(List<String> infoList){
+        /**
+         * 本函数是分析薪资的算法，关系整个薪资的正确性
+         */
         String salary="";
         String[] numStr;
         for(int i=0;i<infoList.size();i++) {

@@ -20,16 +20,17 @@ public class Main {
         infoList = new ArrayList<>(infoSet);
         try{
             WriteFilesImp writeFilesImp = new WriteFilesImp();
-            writeFilesImp.writeResultOne(infoList);//保存题目一答案
+//            writeFilesImp.writeResultOne(infoList);//保存题目一答案
             infoList = SalaryOperator.countAvgSalary(infoList);
-            writeFilesImp.writeResultTwo(infoList);//保存题目二答案
+//            writeFilesImp.writeHandledData(infoList);//保存题目二答案
             double salary = SalaryOperator.getAvg(infoList);
-            writeFilesImp.writeResultThree(salary);//保存题目三答案
-            allSalaryMap=SalaryOperator.queryPostAvg(infoList);
-            writeFilesImp.writeResultFour(allSalaryMap,false);//保存第四题
+//            writeFilesImp.writeConutryAvg(salary);//保存题目三答案
+            allSalaryMap=SalaryOperator.changeDataType(infoList);
+            allSalaryMap=SalaryOperator.queryPostAvg(allSalaryMap);
+//            writeFilesImp.writeAllJobAvg(allSalaryMap,false);//保存第四题
             cityAvg = SalaryOperator.getCityAvg(allSalaryMap);
-            writeFilesImp.writeCityAvg(cityAvg);//保存第五题
-            writeFilesImp.writeResultFour(allSalaryMap,true);//复用第四题代码，保存第6题
+//            writeFilesImp.writeCityAvg(cityAvg);//保存第五题
+            writeFilesImp.writeAllJobAvg(allSalaryMap,true);//复用第四题代码，保存第6题
         }catch (Exception e){
             System.out.println("写文件有误");
         }

@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface WriteFiles {
     public void writeResultOne(List<String> list);
-    public void writeResultTwo(List<String> list);
-    public void writeResultThree(double salary);
-    public void writeResultFour(HashMap<String,HashMap<String, ArrayList<String>>> allSalaryMap, boolean isDevide);
+    public void writeHandledData(List<String> list);
+    public void writeConutryAvg(double salary);
+    public void writeAllJobAvg(HashMap<String,HashMap<String, ArrayList<String>>> allSalaryMap, boolean isDevide);
     public void writeCityAvg(HashMap<String,String> cityAvg);
 
 }

@@ -1,5 +1,7 @@
 package com.company;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,18 +14,20 @@ public class WriteFilesImp implements WriteFiles {
             IOUtil.writeLog(path,item);
         }
     }
-    public void writeResultTwo(List<String> list){
+    public void writeHandledData(List<String> list){
         String path = ".\\results\\Result2.txt";
         for(String item : list){
             String[] splitStr = item.split(",");
-            item = splitStr[0]+",平均薪资（元/月）:"+splitStr[splitStr.length-1];
+            double salary = new BigDecimal(splitStr[splitStr.length-1]).setScale(2, RoundingMode. HALF_UP ).doubleValue();
+            item = splitStr[0]+",平均薪资（元/月）:"+salary;
             IOUtil.writeLog(path,item);
         }
     }
-    public void writeResultThree(double salary){
-        IOUtil.writeLog(".\\results\\Result3.txt","全国大数据工程师平均薪资："+String.valueOf(salary));
+    public void writeConutryAvg(double salary){
+        salary = new BigDecimal(String.valueOf(salary)).setScale(2, RoundingMode. HALF_UP ).doubleValue();
+        IOUtil.writeLog(".\\results\\Result3.txt","全国大数据工程师平均薪资："+salary);
     }
-    public void writeResultFour(HashMap<String,HashMap<String, ArrayList<String>>> allSalaryMap, boolean isDevide){
+    public void writeAllJobAvg(HashMap<String,HashMap<String, ArrayList<String>>> allSalaryMap, boolean isDevide){
         //二重循环可以复用
         for (Map.Entry<String,HashMap<String,ArrayList<String>>> entryCity : allSalaryMap.entrySet()){
             //遍历字典
@@ -37,6 +41,7 @@ public class WriteFilesImp implements WriteFiles {
             for (Map.Entry<String,ArrayList<String>> entryJob : JobMap.entrySet()){
                 String job = entryJob.getKey();
                 String salary = entryJob.getValue().get(entryJob.getValue().size()-1);
+                salary = String.valueOf(new BigDecimal(salary).setScale(2, RoundingMode. HALF_UP ).doubleValue());
                 IOUtil.writeLog(path,job+",此工作的平均薪资："+salary);
             }
         }
@@ -44,7 +49,8 @@ public class WriteFilesImp implements WriteFiles {
 
     public void writeCityAvg(HashMap<String,String> cityAvg){
         for(Map.Entry<String,String> entry : cityAvg.entrySet()){
-            IOUtil.writeLog(".\\results\\Result5.txt",entry.getKey()+",此城市的平均薪资："+entry.getValue());
+            String salary = String.valueOf(new BigDecimal(entry.getValue()).setScale(2, RoundingMode. HALF_UP ).doubleValue());
+            IOUtil.writeLog(".\\results\\Result5.txt",entry.getKey()+",此城市的平均薪资："+salary);
         }
     }
 
