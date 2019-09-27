@@ -8,6 +8,11 @@ import java.util.List;
 import java.util.Map;
 
 public class WriteFilesImp implements WriteFiles {
+    /**
+     * 将第一题第二题答案保存到文件中
+     * @param list 答案所在列表
+     * @param isHasSalary 是否包含薪资，用来判断是第一题还是第二题
+     */
     public void writeHandledData(List<String> list,boolean isHasSalary){
         if(isHasSalary){
             String path = ".\\results\\Result2.txt";
@@ -24,6 +29,7 @@ public class WriteFilesImp implements WriteFiles {
             }
         }
     }
+
     public void writeConutryAvg(double salary){
         salary = new BigDecimal(String.valueOf(salary)).setScale(2, RoundingMode. HALF_UP ).doubleValue();
         IOUtil.writeLog(".\\results\\Result3.txt","全国大数据工程师平均薪资："+salary);

@@ -28,16 +28,19 @@ public class IOUtil {
         }
     }
 
+    /**
+     * 读文件
+     * @param path 文件路径
+     * @return 返回list
+     */
     public static List<String> readLines(String path) throws IOException {
         FileReader fileReader = new FileReader (path);
         List<String> list = new ArrayList<> ();
         BufferedReader bufferedReader = new BufferedReader (fileReader);
         String line;
         while ((line = bufferedReader.readLine ()) != null) {
-//            System.out.println (line);
             list.add (line);
         }
-        //fileReader.close ();
         bufferedReader.close ();
         return list;
     }

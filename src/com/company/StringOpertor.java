@@ -5,6 +5,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public class StringOpertor {
+    /**
+     * 对字符串进行操作（分割去除等）
+     * @param allInfoList 存放所有字符串的list，每一条字符串就是一条薪资数据
+     * @return 处理过的字符串list
+     */
     public static List<String> CutString(List<String> allInfoList) {
         for (int i = 0; i < allInfoList.size(); i++) {
             String singleInfo = allInfoList.get(i);

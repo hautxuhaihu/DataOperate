@@ -1,14 +1,16 @@
 package com.company;
 import java.util.*;
 
+/**
+ * 因为相同职位不同企业工资可能不同，所以定义{"公司名"：{"岗位":[企业1薪资，企业2薪资...]}}
+ */
 public class SalaryOperator {
-    //因为相同职位不同企业工资可能不同，所以定义{"公司名"：{"岗位":[企业1薪资，企业2薪资...]}}
+    /**
+     * 本函数主要是将list[string1,string2....]转化为高级的数据类型，用来解决复杂问题（4-6）
+     * @param InfoList 装着每条字符串的list，每条字符串，是一个职位的信息
+     * @return 高级的数据类型{城市：{岗位：[salary1,salary2....]}}
+     */
     public static HashMap<String,HashMap<String,ArrayList<String>>> changeDataType(List<String> InfoList){
-        /**
-         * 本函数主要是将list[string1,string2....]转化为高级的数据类型，用来解决复杂问题（4-6）
-         * @param InfoList:装着每条字符串的list，每条字符串，是一个职位的信息
-         * @return：高级的数据类型{城市：{岗位：[salary1,salary2....]}}
-         */
         HashMap<String,HashMap<String, ArrayList<String>>> allSalaryMap = new HashMap<>();
         for(int i=0;i<InfoList.size();i++){
             String infoString = InfoList.get(i);
@@ -38,13 +40,14 @@ public class SalaryOperator {
         return allSalaryMap;
     }
 
+    /**
+     * 计算平均薪资
+     * @param allSalaryMap：这是一个贯穿整个项目的高级数据类型；
+     * @return allSalaryMap,我们将平均工资仍然放在这个数据结构中，并返回，让整个系统以这个数据机构为一个数据链，
+     *          * 后续操作都只是对这个数据链进行操作。
+     */
     public static  HashMap<String,HashMap<String,ArrayList<String>>> queryPostAvg
             (HashMap<String,HashMap<String,ArrayList<String>>> allSalaryMap){
-        /**
-         * @param allSalaryMap:这是一个贯穿整个项目的高级数据类型；
-         * @return: allSalaryMap,我们将平均成绩仍然放在这个数据结构中，并返回，让整个系统以这个数据机构为一个数据链，
-         * 后续操作都只是对这个数据链进行操作。
-         */
         for (Map.Entry<String,HashMap<String,ArrayList<String>>> entryCity : allSalaryMap.entrySet()){
             //遍历字典
             HashMap<String,ArrayList<String>> JobMap  = entryCity.getValue();
@@ -57,13 +60,12 @@ public class SalaryOperator {
         return allSalaryMap;
     }
 
+    /**
+     * 计算一个城市的薪资均值
+     * @param allSalaryMap 这是我们程序的高级数据类型，存放着城市-岗位-薪资等必要数据，我们可以根据城市找到这个城市的所有岗位，根据岗位得到其薪资
+     * @return {“城市名”：salary}
+     */
     public static HashMap<String,String> getCityAvg(HashMap<String,HashMap<String, ArrayList<String>>> allSalaryMap){
-        /**
-         * 计算一个城市的薪资均值
-         * @param allSalaryMap: 这是我们程序的高级数据类型，存放着城市-岗位-薪资等必要数据
-         *                    我们可以根据城市找到这个城市的所有岗位，根据岗位得到其薪资
-         * @return:{“城市名”：salary}
-         */
         HashMap<String, String> hashMap = new HashMap<>();
         for (Map.Entry<String,HashMap<String,ArrayList<String>>> entryCity : allSalaryMap.entrySet()){
             //遍历字典
@@ -78,12 +80,12 @@ public class SalaryOperator {
         return hashMap;
     }
 
+    /**
+     * 遍历list中的薪资，并计算所有薪资的均值
+     * @param list 存放所有薪资的列表
+     * @return 返回均值
+     */
     public static double getAvg(List<String> list){
-        /**
-         * 遍历list中的薪资，并计算所有薪资的均值
-         * @param list:存放所有薪资的列表
-         * @return :返回均值
-         */
         int i=0;
         double salary = 0;
         for (String item : list){
@@ -96,12 +98,12 @@ public class SalaryOperator {
         return salary;
     }
 
+    /**
+     * 本函数是分析薪资的算法，关系整个薪资的正确性
+     * @param infoList 这是我们第一题处理后的数据
+     * @return 不改变数据类型，将平均薪资加到原字符串末尾，原+“，”+平均薪资
+     */
     public static List<String> countAvgSalary(List<String> infoList){
-        /**
-         * 本函数是分析薪资的算法，关系整个薪资的正确性
-         * @param infoList:这是我们第一题处理后的数据
-         * @return：不改变数据类型，将平均薪资加到原字符串末尾，原+“，”+平均薪资
-         * */
         String salary="";
         String[] numStr;
         for(int i=0;i<infoList.size();i++) {
